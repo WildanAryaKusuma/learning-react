@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CardProduct from '../components/Fragments/CardProduct'
 import Button from '../components/Elements/Button'
 
@@ -36,7 +36,7 @@ const ProductsPage = () => {
 
     useEffect(() => {
         if (cart.length > 0 ) { // ? mengapa kondisi ini bisa menyimpan data ke localstorage walau di reload ? 
-            const sum = cart.reduce((acc, item) => { // bagaimana cara kerja fungsi ini?
+            const sum = cart.reduce((acc, item) => {  // ? bagaimana cara kerja fungsi ini ?
                 const product = products.find((product) => product.id === item.id)
                 return acc + product.price * item.qty
             }, 0)
@@ -64,6 +64,26 @@ const ProductsPage = () => {
             setCart([...cart, { id, qty: 1 }])
         }
     }
+
+    // * useRef 
+    const cartRef = useRef([{
+        id: 1, 
+        qty: 1
+    }])
+
+    const handleAddToCartRef = (id) => {
+        cartRef.current = [...cartRef, {id, qty: 1}]
+    }
+
+    const totalPriceRef = useRef(null)
+
+    useEffect(() => {
+        if (cart.length > 0) {
+            totalPriceRef.current.style.display = "table-row"
+        } else {
+            totalPriceRef.current.style.display = "none"
+        }
+    }, [cart])
 
     return (
         <>
@@ -107,7 +127,7 @@ const ProductsPage = () => {
                                     </tr>
                                 )
                             })}
-                            <tr>
+                            <tr ref={totalPriceRef}>
                                 <td colSpan={3}><b>Total Price</b></td>
                                 <td><b>Rp {totalPrice.toLocaleString('id-ID', { styles: 'currency', currency: 'IDR' })}</b></td>
                             </tr>
