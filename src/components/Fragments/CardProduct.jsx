@@ -15,7 +15,7 @@ const Header = ({ image }) => {
     return (
         <a href="#">
             <img src={image} alt=""
-                className="p-8 rounded-t-lg" />
+                className="p-8 rounded-t-lg h-72 w-full object-cover" />
         </a>
     )
 }
@@ -28,7 +28,7 @@ const Body = (props) => {
             <a href="#" className="">
                 <h5 className="text-xl font-semibold tracking-tight text-white">{name}</h5>
                 <p className="text-s text-white">
-                    {children}
+                    {children.substring(0, 100)}...
                 </p>
             </a>
         </div>
@@ -40,7 +40,7 @@ const Footer = (props) => {
 
     return (
         <div className="flex items-center justify-between px-5 pb-5">
-            <span className="text-xl font-bold text-white">Rp. {price.toLocaleString('id-ID', {styles: 'currency', curreny: 'IDR'})}</span>
+            <span className="text-xl font-bold text-white">$ {price.toLocaleString('en-US', {styles: 'currency', curreny: 'USD'})}</span>
             <Button classname="bg-blue-600" onClick={() => handleAddToCart(id)}>Add to cart</Button>
         </div>
     )
