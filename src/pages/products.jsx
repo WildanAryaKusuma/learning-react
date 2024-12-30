@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import CardProduct from '../components/Fragments/CardProduct'
 import Button from '../components/Elements/Button'
 import { getProducts } from '../services/product.service'
+import { useLogin } from '../hooks/useLogin'
 
 const ProductsPage = () => {
     const [cart, setCart] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [products, setProducts] = useState([])
+    const username = useLogin()
 
     useEffect(() => { // * mounting untuk mengambil data cart dari localstorage, kalau gaada buat setCart menjadi []
         setCart(JSON.parse(localStorage.getItem("cart")) || [])
@@ -15,7 +17,6 @@ const ProductsPage = () => {
     useEffect(() => {
         getProducts((data) => {
             setProducts(data.products)
-            console.log(data.products)
         })
     }, [])
 
@@ -32,9 +33,8 @@ const ProductsPage = () => {
         }
     }, [cart, products])
 
-    const getPerson = JSON.parse(localStorage.getItem('person'))
     const handleLogout = () => {
-        localStorage.removeItem('person')
+        localStorage.removeItem('accessToken')
         window.location.href = '/'
     }
 
@@ -73,7 +73,7 @@ const ProductsPage = () => {
     return (
         <>
             <div className="flex justify-end h-16 bg-blue-600 text-white items-center px-10">
-                {getPerson.email}
+                {username}
                 <Button classname="ml-4 bg-black" onClick={handleLogout}>Logout</Button>
             </div>
             <div className="flex justify-center py-5">

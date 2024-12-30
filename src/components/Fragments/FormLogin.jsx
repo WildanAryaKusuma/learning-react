@@ -1,35 +1,50 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useInsertionEffect, useRef, useState } from "react"
 import Button from "../Elements/Button"
 import InputForm from "../Elements/Input"
+import { login } from "../../services/auth.service"
 
 const FormLogin = () => {
+    const [loginFailed, setLoginFailed] = useState("")
+
     const handleLogin = (event) => {
         event.preventDefault()
 
-        const person = {
-            email: event.target.email.value,
-            password: event.target.password.value
+        const data = {
+            username: event.target.username.value,
+            password: event.target.password.value, 
+            expiresInMins: 60
         }
 
-        localStorage.setItem('person', JSON.stringify(person))
-        console.log("successfuly store data to local storage")
-        window.location.href = '/products'
+        login(data, (statusCode, res) => {
+            if(statusCode) {
+                localStorage.setItem('accessToken', res)
+                console.log('accessToken masuk ke localStorage')
+                setLoginFailed("")
+                window.location.href = '/products'
+            } else {
+                console.log(res.response.data.message)
+                setLoginFailed(res.response.data.message)
+            }
+        })
+
     }
 
-    const emailRef = useRef(null)
+    const usernameRef = useRef(null)
 
     useEffect(() => {
-        emailRef.current.focus()
+        usernameRef.current.focus()
     }, [])
 
     return (
         <form onSubmit={handleLogin}>
+            
+            { loginFailed && <p className="text-red-500 text-center -mt-5 mb-2">{loginFailed}</p> }
             <InputForm
-                label="Email"
-                type="email"
-                name="email"
-                placeholder="example@gmail.com"
-                ref={emailRef}
+                label="Username"
+                type="text"
+                name="username"
+                placeholder="Emilys"
+                ref={usernameRef}
             />
             <InputForm
                 label="Password"
