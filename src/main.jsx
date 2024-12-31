@@ -6,9 +6,10 @@ import LoginPage from './Pages/login.jsx'
 import ErrorPage from './pages/404.jsx'
 import RegisterPage from './pages/register.jsx'
 import ProductsPage from './pages/products.jsx'
-import Counter from './components/Fragments/Counter.jsx'
 import ProfilePage from './pages/profile.jsx'
 import DetailProductPage from './pages/detailProduct.jsx'
+import { Provider } from 'react-redux'
+import store from './redux/store.js'
 
 const HomePage = () => {
   return (
@@ -23,33 +24,33 @@ const router = createBrowserRouter([
     path: "/",
     element: <HomePage />,
     errorElement: <ErrorPage />
-  }, 
+  },
   {
-    path: "login", 
+    path: "login",
     element: <LoginPage />
   },
   {
-    path: "register", 
+    path: "register",
     element: <RegisterPage />
   },
   {
-    path: "products", 
+    path: "products",
     element: <ProductsPage />
   },
   {
-    path: "profile", 
+    path: "profile",
     element: <ProfilePage />
   },
   {
-    path: "/product/:id", 
+    path: "/product/:id",
     element: <DetailProductPage />
   }
 ])
 
-
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )

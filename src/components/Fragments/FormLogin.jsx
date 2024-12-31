@@ -22,7 +22,7 @@ const FormLogin = () => {
                 setLoginFailed("")
                 window.location.href = '/products'
             } else {
-                console.log(res.response.data.message)
+                // console.log(res.response.data.message)
                 setLoginFailed(res.response.data.message)
             }
         })

@@ -12,7 +12,7 @@ const DetailProductPage = () => {
         })
     }, [id])
 
-    console.log(product)
+    // console.log(product)
 
     return (
         <>
