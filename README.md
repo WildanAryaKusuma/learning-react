@@ -91,6 +91,32 @@ node server.js
 
 This will start a proxy server on the backend to handle CORS issues for the API calls. Keep this terminal open while developing.
 
+## Authentication with DummyJSON API
+
+This guide covers how to perform authentication using the DummyJSON API, complete with example credentials and implementation steps. This document also provides references and a call-to-action to test the authentication endpoint.
+
+### Example Credentials
+- **Username**: `emilys`
+- **Password**: `emilyspass`
+
+### API Endpoint
+To handle authentication, use the DummyJSON API’s authentication endpoint:
+
+**POST** `/auth/login`
+
+### Request Example
+```json
+{
+  "username": "emilys",
+  "password": "emilyspass"
+}
+```
+
+## References
+- [DummyJSON Authentication Documentation](https://dummyjson.com/docs/auth)
+- [Fetch API Reference](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+- [React useState Hook](https://reactjs.org/docs/hooks-state.html)
+
 ## Technologies Used
 
 - **React**: JavaScript library for building user interfaces
