@@ -8,6 +8,7 @@ import RegisterPage from './pages/register.jsx'
 import ProductsPage from './pages/products.jsx'
 import Counter from './components/Fragments/Counter.jsx'
 import ProfilePage from './pages/profile.jsx'
+import DetailProductPage from './pages/detailProduct.jsx'
 
 const HomePage = () => {
   return (
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "profile", 
     element: <ProfilePage />
+  },
+  {
+    path: "/product/:id", 
+    element: <DetailProductPage />
   }
 ])
 
