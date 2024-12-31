@@ -8,7 +8,7 @@ import { DarkMode } from '../context/darkMode'
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([])
-    const {isDarkMode, setIsDarkMode} = useContext(DarkMode)
+    const { isDarkMode } = useContext(DarkMode)
     useLogin()
 
     useEffect(() => {
@@ -20,7 +20,8 @@ const ProductsPage = () => {
     return (
         <>
             <Navbar />
-            <div className={`flex justify-center py-5 ${isDarkMode && `bg-slate-900`} `}>
+            <div className={`flex justify-center py-5 ${isDarkMode ? 'bg-slate-900' : ''}`}>
+                {/* Produk Section */}
                 <div className="w-4/6 flex flex-wrap">
                     {products.length > 0 &&
                         products.map(product => (
@@ -34,9 +35,20 @@ const ProductsPage = () => {
                         ))
                     }
                 </div>
+
+                {/* Cart Section */}
                 <div className="w-2/6">
-                    <h1 className="text-3xl font-bold text-blue-600 ml-5 mb-3">Cart</h1>
-                    <TableCart products={products} />
+                    <div
+                        className="sticky top-5 bg-white shadow-lg rounded-md p-4"
+                        style={{
+                            maxHeight: '80vh', // Mengatur tinggi maksimal
+                            overflowY: 'auto', // Tambahkan scroll jika konten terlalu panjang
+                            zIndex: 10
+                        }}
+                    >
+                        <h1 className="text-3xl font-bold text-blue-600 mb-3">Cart</h1>
+                        <TableCart products={products} />
+                    </div>
                 </div>
             </div>
         </>
