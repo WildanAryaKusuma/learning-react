@@ -39,14 +39,14 @@ const ProductsPage = () => {
                 {/* Cart Section */}
                 <div className="w-2/6">
                     <div
-                        className="sticky top-5 bg-white shadow-lg rounded-md p-4"
+                        className={`sticky top-5  ${isDarkMode ? `bg-gray-800` : `bg-white`} shadow-lg rounded-md p-4`}
                         style={{
                             maxHeight: '80vh', // Mengatur tinggi maksimal
                             overflowY: 'auto', // Tambahkan scroll jika konten terlalu panjang
                             zIndex: 10
                         }}
                     >
-                        <h1 className="text-3xl font-bold text-blue-600 mb-3">Cart</h1>
+                        <h1 className={`text-3xl font-bold ${isDarkMode ? `text-blue-300` : `text-blue-800`} mb-3`}>Cart</h1>
                         <TableCart products={products} />
                     </div>
                 </div>

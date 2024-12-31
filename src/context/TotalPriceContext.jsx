@@ -1,24 +1,22 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
-const TotalPriceContext = createContext(null) // nyimpen state
-const TotalPriceDispatchContext = createContext(null) // nyimpen actionnya
+export const TotalPriceContext = createContext(null); // Context untuk state
+export const TotalPriceDispatchContext = createContext(null); // Context untuk dispatch
 
 const totalPriceReducer = (state, action) => {
     switch (action.type) {
-        case 'UPDATE': {
+        case "UPDATE": {
             return {
-                total: action.payload.total
-            }
+                total: action.payload.total,
+            };
         }
         default:
-            throw Error('Unknown Action' + action.type)
+            throw new Error("Unknown action: " + action.type);
     }
-}
+};
 
-export function TotalPriceProvider({children}) { 
-    // * param pertama dari useReducer adalah reducer nya itu sendiri
-    // * param kedua adalah default initial state nya
-    const [totalPrice, dispatch] = useReducer(totalPriceReducer, {total: 0 })
+export function TotalPriceProvider({ children }) {
+    const [totalPrice, dispatch] = useReducer(totalPriceReducer, { total: 0 });
 
     return (
         <TotalPriceContext.Provider value={totalPrice}>
@@ -26,13 +24,5 @@ export function TotalPriceProvider({children}) {
                 {children}
             </TotalPriceDispatchContext.Provider>
         </TotalPriceContext.Provider>
-    )
-}
-
-export function useTotalPrice() {
-    return useContext(TotalPriceContext)
-}
-
-export function useTotalPriceDispatch() {
-    return useContext(TotalPriceDispatchContext)
+    );
 }

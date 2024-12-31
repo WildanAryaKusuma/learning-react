@@ -1,55 +1,62 @@
-import { useContext, useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { useLogin } from "../../hooks/useLogin"
-import Button from "../Elements/Button"
-import { DarkMode } from "../../context/darkMode"
+import { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useLogin } from "../../hooks/useLogin";
+import Button from "../Elements/Button";
+import { DarkMode } from "../../context/darkMode";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { CiShoppingCart } from "react-icons/ci";
-import { useTotalPrice } from "../../context/TotalPriceContext"
+import { useTotalPrice } from "../../hooks/useTotalPrice";
 
 const Navbar = () => {
-    const username = useLogin()
-    const [totalCart, setTotalCart] = useState(0)
-    const { isDarkMode, setIsDarkMode } = useContext(DarkMode)
-    const cart = useSelector((state) => state.cart.data)
-    const {total} = useTotalPrice()
+    const username = useLogin();
+    const [totalCart, setTotalCart] = useState(0);
+    const { isDarkMode, setIsDarkMode } = useContext(DarkMode);
+    const cart = useSelector((state) => state.cart.data);
+    const { total } = useTotalPrice();
 
     useEffect(() => {
-        const sum = cart.reduce((acc, item) => {
-            return acc + item.qty
-        }, 0)
-        setTotalCart(sum)
-    }, [cart])
+        const sum = cart.reduce((acc, item) => acc + item.qty, 0);
+        setTotalCart(sum);
+    }, [cart]);
 
     const handleLogout = () => {
-        localStorage.removeItem('accessToken')
-        window.location.href = '/'
-    }
+        localStorage.removeItem("accessToken");
+        window.location.href = "/";
+    };
 
-    const formattedTotal = total.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2, // Set jumlah minimum angka desimal
-        maximumFractionDigits: 2, // Set jumlah maksimum angka desimal
+    const formattedTotal = (total || 0).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
     });
 
     return (
-        <div className="flex justify-end h-16 bg-blue-600 text-white items-center px-10">
-            {username}
-            <Button classname="ml-4 bg-black" onClick={handleLogout}>Logout</Button>
-            <div className="flex items-center bg-gray-800 p-2 rounded-md mx-5">
-                <CiShoppingCart style={{ marginRight: '3px', fontSize: '1.5rem' }} /> {totalCart} | Total Price : {formattedTotal}
+        <nav className="flex items-center justify-between bg-blue-800 text-white px-6 py-3">
+            <span className="text-lg font-semibold">{username}</span>
+            <div className="flex items-center space-x-4">
+                <Button classname="bg-gray-900 hover:bg-gray-700 px-4 py-2 rounded" onClick={handleLogout}>
+                    Logout
+                </Button>
+                <div className="flex items-center bg-gray-700 px-3 py-2 rounded-md text-sm space-x-2">
+                    <CiShoppingCart className="text-xl" />
+                    <span>{totalCart}</span>
+                    <span className="text-gray-300">|</span>
+                    <span>{formattedTotal}</span>
+                </div>
+                <button
+                    className="bg-gray-900 hover:bg-gray-700 p-2 rounded-full"
+                    onClick={() => setIsDarkMode(!isDarkMode)}
+                >
+                    {isDarkMode ? (
+                        <MdOutlineLightMode className="text-yellow-400 text-lg" />
+                    ) : (
+                        <MdOutlineDarkMode className="text-gray-300 text-lg" />
+                    )}
+                </button>
             </div>
-            <Button classname="bg-black p-2 text-white rounded"
-                onClick={() => setIsDarkMode(!isDarkMode)}
-            >
-                {isDarkMode
-                    ? <MdOutlineLightMode />
-                    : <MdOutlineDarkMode />
-                }
-            </Button>
-        </div>
-    )
-}
+        </nav>
+    );
+};
 
-export default Navbar
+export default Navbar;

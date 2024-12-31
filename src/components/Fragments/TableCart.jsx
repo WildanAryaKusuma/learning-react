@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { DarkMode } from '../../context/darkMode'
-import { useTotalPrice, useTotalPriceDispatch } from '../../context/TotalPriceContext'
+import { useTotalPriceDispatch } from '../../hooks/useTotalPriceDispatch'
+import { useTotalPrice } from '../../hooks/useTotalPrice'
 
 const TableCart = (props) => {
     const { products } = props
